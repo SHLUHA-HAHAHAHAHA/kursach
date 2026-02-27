@@ -54,10 +54,10 @@
                 <div class="card complaint-card shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h5 class="card-title text-primary"><?= htmlspecialchars($row['institution_name']) ?></h5>
-                            <span class="badge bg-secondary"><?= htmlspecialchars($row['category']) ?></span>
+                            <h5 class="card-title text-primary"><?= $row['institution_name'] ?></h5>
+                            <span class="badge bg-secondary"><?= $row['category'] ?></span>
                         </div>
-                        <p class="card-text mt-2"><?= nl2br(htmlspecialchars($row['message'])) ?></p>
+                        <p class="card-text mt-2"><?= $row['message'] ?></p>
                         <small class="text-muted">Дата публикации: <?= $row['created_at'] ?></small>
                     </div>
                 </div>

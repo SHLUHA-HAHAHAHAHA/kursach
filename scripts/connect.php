@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db   = 'education_db';
 $user = 'root';
-$pass = ''; // В OpenServer по умолчанию '' или 'root'
+$pass = '';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
