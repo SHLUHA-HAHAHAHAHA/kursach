@@ -179,14 +179,10 @@ body {
 }
 
 .stat-num {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 36px;
-    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight:bold;
     color: var(--crimson);
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum";
-    letter-spacing: -0.03em;
 }
 
 .stat-label {

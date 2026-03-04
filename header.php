@@ -11,7 +11,7 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
     <!-- Custom styles -->
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -21,6 +21,7 @@
     <div class="header-inner">
 
         <a href="index.php" class="logo">
+            <div class="logo-icon">⚖</div>
             <div class="logo-text">
                 <span class="logo-title">ГолосОбразования</span>
                 <span class="logo-sub">Система жалоб</span>
