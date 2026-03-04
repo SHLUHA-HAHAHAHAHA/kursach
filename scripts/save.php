@@ -1,19 +1,33 @@
 <?php
 include 'connect.php';
-include 'validator.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST['institution_name'];
-    $cat  = $_POST['category'];
-    $msg  = $_POST['message'];
-
-    if (!empty($name) && !empty($msg) && is_valid_message($msg)) {
-        $sql = "INSERT INTO complaints (institution_name, category, message) VALUES (?, ?, ?)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$name, $cat, $msg]);
-    }
-
-    header("Location: ../index.php"); // Возвращаемся обратно
-    exit();
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ../submit.php');
+    exit;
 }
-?>
+
+$institution_id = (int) ($_POST['institution_id'] ?? 0);
+$category       = trim($_POST['category'] ?? '');
+$message        = trim($_POST['message'] ?? '');
+
+$allowed_categories = ['Качество обучения', 'Инфраструктура', 'Коррупция', 'Другое'];
+
+if (!$institution_id || !$message || !in_array($category, $allowed_categories)) {
+    header('Location: ../submit.php?error=1');
+    exit;
+}
+
+$check = $pdo->prepare("SELECT id FROM institutions WHERE id = ?");
+$check->execute([$institution_id]);
+if (!$check->fetch()) {
+    header('Location: ../submit.php?error=1');
+    exit;
+}
+
+$stmt = $pdo->prepare(
+    "INSERT INTO complaints (institution_id, category, message) VALUES (?, ?, ?)"
+);
+$stmt->execute([$institution_id, $category, $message]);
+
+header('Location: ../submit.php?sent=1');
+exit;
