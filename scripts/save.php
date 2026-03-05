@@ -7,12 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $institution_id = (int) ($_POST['institution_id'] ?? 0);
-$category       = trim($_POST['category'] ?? '');
 $message        = trim($_POST['message'] ?? '');
 
-$allowed_categories = ['Качество обучения', 'Инфраструктура', 'Коррупция', 'Другое'];
-
-if (!$institution_id || !$message || !in_array($category, $allowed_categories)) {
+if (!$institution_id || !$message) {
     header('Location: ../submit.php?error=1');
     exit;
 }
@@ -24,10 +21,8 @@ if (!$check->fetch()) {
     exit;
 }
 
-$stmt = $pdo->prepare(
-    "INSERT INTO complaints (institution_id, category, message) VALUES (?, ?, ?)"
-);
-$stmt->execute([$institution_id, $category, $message]);
+$stmt = $pdo->prepare("INSERT INTO complaints (institution_id, message) VALUES (?, ?)");
+$stmt->execute([$institution_id, $message]);
 
 header('Location: ../submit.php?sent=1');
 exit;
