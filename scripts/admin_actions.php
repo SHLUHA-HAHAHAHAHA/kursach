@@ -2,7 +2,7 @@
 include 'connect.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-// ── Защита: только залогиненные ──
+// защита
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../login.php');
     exit;
@@ -18,9 +18,7 @@ function redirect(string $section, string $msg): void {
 
 switch ($action) {
 
-    // ══════════════════════════════════════
-    //  Удалить жалобу  (доступно всем админам)
-    // ══════════════════════════════════════
+    //  удалить жалобу
     case 'delete_complaint': {
         $id = (int)($_GET['id'] ?? 0);
         if (!$id) redirect('complaints', 'error');
@@ -30,9 +28,7 @@ switch ($action) {
         redirect('complaints', 'complaint_deleted');
     }
 
-    // ══════════════════════════════════════
-    //  Добавить учреждение  (доступно всем админам)
-    // ══════════════════════════════════════
+    //  добавить учреждение
     case 'add_institution': {
         $title = trim($_POST['title'] ?? '');
         if (!$title) redirect('institutions', 'error');
@@ -42,15 +38,12 @@ switch ($action) {
         redirect('institutions', 'institution_added');
     }
 
-    // ══════════════════════════════════════
-    //  Удалить учреждение  (доступно всем админам)
-    //  Только если нет связанных жалоб
-    // ══════════════════════════════════════
+    //  удалить учреждение
     case 'delete_institution': {
         $id = (int)($_GET['id'] ?? 0);
         if (!$id) redirect('institutions', 'error');
 
-        // Проверяем — есть ли жалобы
+        // проверка наличия жалоб
         $check = $pdo->prepare("SELECT COUNT(*) FROM complaints WHERE institution_id = ?");
         $check->execute([$id]);
         if ($check->fetchColumn() > 0) redirect('institutions', 'error');
@@ -60,9 +53,7 @@ switch ($action) {
         redirect('institutions', 'institution_deleted');
     }
 
-    // ══════════════════════════════════════
-    //  Одобрить предложение — создаёт учреждение и меняет статус
-    // ══════════════════════════════════════
+    //  одобрить предложение
     case 'approve_suggestion': {
         $id = (int)($_GET['id'] ?? 0);
         if (!$id) redirect('suggestions', 'error');
@@ -83,9 +74,7 @@ switch ($action) {
         redirect('suggestions', 'suggestion_approved');
     }
 
-    // ══════════════════════════════════════
-    //  Отклонить предложение
-    // ══════════════════════════════════════
+    //  отклонить предложение
     case 'reject_suggestion': {
         $id = (int)($_GET['id'] ?? 0);
         if (!$id) redirect('suggestions', 'error');
@@ -95,9 +84,7 @@ switch ($action) {
         redirect('suggestions', 'suggestion_rejected');
     }
 
-    // ══════════════════════════════════════
-    //  Удалить запись предложения (уже обработанного)
-    // ══════════════════════════════════════
+    //  удалить запись предложения в бд
     case 'delete_suggestion': {
         $id = (int)($_GET['id'] ?? 0);
         if (!$id) redirect('suggestions', 'error');
@@ -118,7 +105,7 @@ switch ($action) {
         if (!$name || !$login || strlen($password) < 6) redirect('users', 'error');
         if (!in_array($role, [0, 1], true)) redirect('users', 'error');
 
-        // Проверяем уникальность логина
+        // проверяем уникальность логина
         $check = $pdo->prepare("SELECT id FROM users WHERE login = ?");
         $check->execute([$login]);
         if ($check->fetch()) redirect('users', 'login_exists');
@@ -131,10 +118,8 @@ switch ($action) {
         redirect('users', 'user_added');
     }
 
-    // ══════════════════════════════════════
-    //  Удалить пользователя  (только суперадмин)
-    //  Нельзя удалить себя
-    // ══════════════════════════════════════
+    //  удалить пользователя
+    //  нельзя удалить себя
     case 'delete_user': {
         if (!$is_super) redirect('overview', 'forbidden');
 
