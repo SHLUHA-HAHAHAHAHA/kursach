@@ -165,7 +165,7 @@ $has_filters = $search !== '' || $filter_inst > 0;
             </div>
 
             <p class="complaint-message">
-                <?= $row['message'], $search ?>
+                <?= $row['message']?>
             </p>
 
             <div class="complaint-meta">

@@ -79,10 +79,12 @@ $suggest_sent     = isset($_GET['suggested']) && $_GET['suggested'] == '1';
             <hr class="opacity-10 my-4">
 
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <a href="index.php" class="btn-link-back">← К списку обращений</a>
+
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-send me-2"></i>Отправить
                 </button>
-                <a href="index.php" class="btn-link-back">← К списку обращений</a>
+
             </div>
 
             <div class="anon-note mt-3">
