@@ -366,7 +366,7 @@ include 'header.php';
     </main>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 function showSection(name) {
     document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
@@ -381,5 +381,6 @@ function showSection(name) {
 }
 showSection('<?= htmlspecialchars($section) ?>');
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

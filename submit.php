@@ -3,13 +3,14 @@ include 'scripts/connect.php';
 $page_title = 'Подать жалобу — ГолосОбразования';
 include 'header.php';
 
-$success          = isset($_GET['sent'])      && $_GET['sent']      == '1';
-$error            = isset($_GET['error'])     && $_GET['error']     == '1';
-$suggest_sent     = isset($_GET['suggested']) && $_GET['suggested'] == '1';
+$success      = isset($_GET['sent'])      && $_GET['sent']      == '1';
+$error        = isset($_GET['error'])     && $_GET['error']     == '1';
+$suggest_sent = isset($_GET['suggested']) && $_GET['suggested'] == '1';
 ?>
 
 <div class="page-wrapper">
 
+    <div class="page-eyebrow">Ваш голос важен</div>
     <h1 class="page-heading">Подать обращение</h1>
     <p class="page-desc">Заполните форму. Обращение полностью анонимно — ваши данные не сохраняются.</p>
 
@@ -56,8 +57,8 @@ $suggest_sent     = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                     <option value="<?= $inst['id'] ?>"><?= htmlspecialchars($inst['title']) ?></option>
                     <?php endforeach; ?>
                 </select>
-                <!-- Кнопка предложения -->
-                <button type="button" class="suggest-trigger mt-2" data-bs-toggle="modal" data-bs-target="#suggestModal">
+
+                <button type="button" class="suggest-trigger mt-2" id="openSuggestModal">
                     <i class="bi bi-question-circle"></i> Нет вашего учебного заведения?
                 </button>
             </div>
@@ -80,11 +81,9 @@ $suggest_sent     = isset($_GET['suggested']) && $_GET['suggested'] == '1';
 
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                 <a href="index.php" class="btn-link-back">← К списку обращений</a>
-
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-send me-2"></i>Отправить
                 </button>
-
             </div>
 
             <div class="anon-note mt-3">
@@ -97,7 +96,7 @@ $suggest_sent     = isset($_GET['suggested']) && $_GET['suggested'] == '1';
 
 </div>
 
-<!-- ══ МОДАЛЬНОЕ ОКНО — предложить учреждение ══ -->
+<!-- ══ МОДАЛЬНОЕ ОКНО ══ -->
 <div class="modal fade" id="suggestModal" tabindex="-1" aria-labelledby="suggestModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow" style="border-radius:14px; overflow:hidden;">
@@ -120,7 +119,7 @@ $suggest_sent     = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                     Укажите полное название учебного заведения. Администраторы проверят и добавят его в список.
                 </p>
 
-                <form action="scripts/save_suggestion.php" method="POST" novalidate id="suggestForm">
+                <form action="scripts/save_suggestion.php" method="POST" novalidate>
                     <div class="mb-4">
                         <label class="form-label" for="suggest_title">Название учреждения</label>
                         <input
@@ -134,7 +133,7 @@ $suggest_sent     = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                         >
                     </div>
 
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 flex-wrap">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-send me-2"></i>Отправить предложение
                         </button>
@@ -153,5 +152,20 @@ $suggest_sent     = isset($_GET['suggested']) && $_GET['suggested'] == '1';
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modalEl = document.getElementById('suggestModal');
+    var btn     = document.getElementById('openSuggestModal');
+
+    if (!modalEl || !btn) return;
+
+    // Teleport: перемещаем модалку прямо в <body>
+    // чтобы она вышла из любого stacking context (sticky header и т.д.)
+    document.body.appendChild(modalEl);
+
+    var modal = new bootstrap.Modal(modalEl);
+    btn.addEventListener('click', function () { modal.show(); });
+});
+</script>
 </body>
 </html>

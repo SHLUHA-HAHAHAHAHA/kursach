@@ -38,7 +38,7 @@ body {
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
-    z-index: 1030;
+    z-index: 100;
     box-shadow: 0 1px 8px rgba(0,0,0,0.06);
 }
 
@@ -246,7 +246,7 @@ body {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
-    overflow: hidden;
+    overflow: clip;
     margin-bottom: 24px;
     display: flex;
 }
@@ -288,14 +288,14 @@ body {
     padding: 18px 20px;
     margin-bottom: 10px;
     transition: box-shadow 0.18s ease;
-    animation: fadeUp 0.35s ease both;
+    animation: fadeUp 0.35s ease forwards;
 }
 
 .complaint-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
 
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: none; }
 }
 
 .complaint-institution {
@@ -576,7 +576,7 @@ body {
 /* Критично: без этого main может выходить за пределы грида */
 .admin-layout > main {
     min-width: 0;
-    overflow: hidden;
+    overflow: clip;
 }
 
 .admin-sidebar {
@@ -814,7 +814,7 @@ body {
     .admin-layout > main {
         min-width: 0;
         width: 100%;
-        overflow: hidden;
+        overflow: clip;
     }
 
     .admin-sidebar { display: none; }
@@ -1026,4 +1026,23 @@ mark.search-hl {
         flex: none;
     }
     .btn-reset-filter { width: 100%; justify-content: center; }
+}
+
+/* ─────────────────────────────────────────
+   MODAL — гарантируем позиционирование от viewport
+   Teleport в JS переносит .modal в <body>,
+   этот блок — страховка на случай если браузер
+   всё равно считает containing block неправильно
+───────────────────────────────────────── */
+.modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+}
+
+.modal-backdrop {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
 }

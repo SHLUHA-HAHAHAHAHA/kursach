@@ -49,12 +49,22 @@ $complaints = $stmt->fetchAll();
 $found = count($complaints);
 $has_filters = $search !== '' || $filter_inst > 0;
 
-
+// ── Функция подсветки совпадения ──
+function highlight(string $text, string $query): string {
+    if ($query === '') return htmlspecialchars($text);
+    $safe_query = preg_quote(htmlspecialchars($query), '/');
+    return preg_replace(
+        '/(' . $safe_query . ')/iu',
+        '<mark class="search-hl">$1</mark>',
+        htmlspecialchars($text)
+    );
+}
 ?>
 
 <div class="page-wrapper">
 
-    <h1 class="page-heading">Обращения студентов</h1>
+    <div class="page-eyebrow">Народный контроль</div>
+    <h1 class="page-heading">Обращения граждан</h1>
     <p class="page-desc">Анонимные жалобы на учебные заведения.</p>
 
     <!-- Stats -->
@@ -165,7 +175,7 @@ $has_filters = $search !== '' || $filter_inst > 0;
             </div>
 
             <p class="complaint-message">
-                <?= $row['message']?>
+                <?= highlight($row['message'], $search) ?>
             </p>
 
             <div class="complaint-meta">
@@ -182,7 +192,7 @@ $has_filters = $search !== '' || $filter_inst > 0;
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 // Отправка формы при вводе с небольшой задержкой (debounce)
 (function () {
@@ -198,5 +208,6 @@ $has_filters = $search !== '' || $filter_inst > 0;
     });
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
