@@ -139,7 +139,7 @@ include 'header.php';
                 <table class="admin-table">
                     <thead><tr><th>#</th><th>Учреждение</th><th>Сообщение</th><th>Дата</th></tr></thead>
                     <tbody>
-                        <?php foreach (array_slice($complaints, 0, 5) as $c): ?>
+                        <?php foreach (array_slice($complaints, 0, 10) as $c): ?>
                         <tr>
                             <td style="color:var(--muted);font-size:12px;"><?= $c['id'] ?></td>
                             <td class="td-main"><?= htmlspecialchars($c['institution_name']) ?></td>

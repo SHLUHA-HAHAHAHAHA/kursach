@@ -27,7 +27,6 @@ $is_logged_in = isset($_SESSION['user_id']);
             </div>
         </a>
 
-        <!-- Desktop nav -->
         <nav class="header-nav">
             <a href="index.php"   class="nav-link-custom <?= $current_page === 'index.php'  ? 'active' : '' ?>">
                 <i class="bi bi-list-ul"></i> Обращения
@@ -57,7 +56,6 @@ $is_logged_in = isset($_SESSION['user_id']);
             <?php endif; ?>
         </nav>
 
-        <!-- Burger button (mobile only) -->
         <button class="burger-btn" id="burgerBtn" aria-label="Меню" aria-expanded="false">
             <i class="bi bi-list" id="burgerIcon"></i>
         </button>

@@ -10,7 +10,6 @@ $suggest_sent = isset($_GET['suggested']) && $_GET['suggested'] == '1';
 
 <div class="page-wrapper">
 
-    <div class="page-eyebrow">Ваш голос важен</div>
     <h1 class="page-heading">Подать обращение</h1>
     <p class="page-desc">Заполните форму. Обращение полностью анонимно — ваши данные не сохраняются.</p>
 

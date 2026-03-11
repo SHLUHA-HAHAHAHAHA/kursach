@@ -63,8 +63,7 @@ function highlight(string $text, string $query): string {
 
 <div class="page-wrapper">
 
-    <div class="page-eyebrow">Народный контроль</div>
-    <h1 class="page-heading">Обращения граждан</h1>
+    <h1 class="page-heading">Обращения студентов</h1>
     <p class="page-desc">Анонимные жалобы на учебные заведения.</p>
 
     <!-- Stats -->
@@ -182,8 +181,6 @@ function highlight(string $text, string $query): string {
                 <i class="bi bi-clock"></i>
                 <?= date('d.m.Y, H:i', strtotime($row['created_at'])) ?>
                 <span class="separator mx-2">·</span>
-                <i class="bi bi-shield-check text-success-custom"></i>
-                <span class="text-success-custom">Анонимно</span>
             </div>
 
         </div>
